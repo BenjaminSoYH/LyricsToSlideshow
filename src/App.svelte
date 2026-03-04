@@ -60,24 +60,39 @@
     if (newTab && !newTab.closed) {
       return;
     }
-    newTab = window.open("", "ppt");
-    if (!newTab) return;
-    const popup = newTab;
-    newTab.document.title = "Slideshow";
+newTab = window.open("", "ppt");
+if (!newTab) return;
 
-    document.querySelectorAll("style").forEach((styleEl) => {
-      const clone = newTab!.document.createElement("style");
-      clone.textContent = styleEl.textContent;
-      popup.document.head.appendChild(clone);
+const popup = newTab;
+popup.document.title = "Slideshow";
 
-  document.querySelectorAll('link[rel="stylesheet"]').forEach((linkEl) => {
-    const clone = popup.document.createElement("link");
-    clone.rel = "stylesheet";
-    clone.href = (linkEl as HTMLLinkElement).href;
-    popup.document.head.appendChild(clone);
-  });
+const style = popup.document.createElement("style");
+style.textContent = `
+  body {
+    margin: 0;
+  }
 
-    });
+  .slide {
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    background: aquamarine;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    margin: 0;
+  }
+`;
+
+popup.document.head.appendChild(style);
 
     mount(Slide, {
       target: newTab.document.body,
