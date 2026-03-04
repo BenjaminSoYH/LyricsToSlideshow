@@ -69,6 +69,14 @@
       const clone = newTab!.document.createElement("style");
       clone.textContent = styleEl.textContent;
       popup.document.head.appendChild(clone);
+
+  document.querySelectorAll('link[rel="stylesheet"]').forEach((linkEl) => {
+    const clone = popup.document.createElement("link");
+    clone.rel = "stylesheet";
+    clone.href = (linkEl as HTMLLinkElement).href;
+    popup.document.head.appendChild(clone);
+  });
+
     });
 
     mount(Slide, {
